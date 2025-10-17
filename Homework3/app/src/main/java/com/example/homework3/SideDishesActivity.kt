@@ -22,17 +22,14 @@ class SideDishesActivity : AppCompatActivity() {
             intent.getParcelableExtra("CURRENT_ORDER")!!
         }
 
-        // 處理 "Done" 按鈕點擊
         binding.btnNext.setOnClickListener {
             val selectedSideDishes = mutableListOf<String>()
-            // 根據選中的 CheckBox 更新副餐 (可多選)
             if (binding.cbFries.isChecked) selectedSideDishes.add("Fries")
             if (binding.cbSalad.isChecked) selectedSideDishes.add("Salad")
             if (binding.cbCornCup.isChecked) selectedSideDishes.add("Corn Cup")
 
             currentOrder.sideDishes = selectedSideDishes
 
-            // 導航到下一個畫面 (Drink)
             val intent = Intent(this, DrinkActivity::class.java).apply {
                 putExtra("CURRENT_ORDER", currentOrder)
             }
@@ -40,7 +37,6 @@ class SideDishesActivity : AppCompatActivity() {
         }
     }
 
-    // 處理後續 Activity 返回的結果，並將結果向上一層傳遞
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_ORDER_WIZARD && resultCode == RESULT_OK) {

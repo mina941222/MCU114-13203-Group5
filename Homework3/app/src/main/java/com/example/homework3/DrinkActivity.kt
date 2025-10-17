@@ -22,9 +22,7 @@ class DrinkActivity : AppCompatActivity() {
             intent.getParcelableExtra("CURRENT_ORDER")!!
         }
 
-        // 處理 "DONE" 按鈕點擊
         binding.btnNext.setOnClickListener {
-            // 根據選中的 RadioButton 更新飲料
             val selectedDrink = when (binding.radioGroupDrink.checkedRadioButtonId) {
                 binding.rbCola.id -> "Cola"
                 binding.rbIcedTea.id -> "Iced Tea"
@@ -33,7 +31,6 @@ class DrinkActivity : AppCompatActivity() {
             }
             currentOrder.drink = selectedDrink
 
-            // 導航到下一個畫面 (Confirm)
             val intent = Intent(this, ConfirmActivity::class.java).apply {
                 putExtra("CURRENT_ORDER", currentOrder)
             }
@@ -41,7 +38,6 @@ class DrinkActivity : AppCompatActivity() {
         }
     }
 
-    // 處理後續 Activity 返回的結果，並將結果向上一層傳遞
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_ORDER_WIZARD && resultCode == RESULT_OK) {
