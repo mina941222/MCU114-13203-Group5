@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ThreadHandlerWizard</string>
+    <string name="idle">Idle</string> <string name="tab_start">Start</string>
+    <string name="tab_progress">Progress</string>
+    <string name="tab_result">Result</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_cancel">Cancel</string>
+</resources>
