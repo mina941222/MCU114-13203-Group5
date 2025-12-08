@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- 確保它繼承自 MaterialComponents 的深色主題，適用於我們的深色 UI 設計 -->
+    <style name="Theme.HealthyLife" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/color_primary_brand</item>
+        <item name="colorPrimaryVariant">@color/color_primary_dark</item>
+        <item name="colorOnPrimary">@color/text_white</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/color_add_meal</item>
+        <item name="colorSecondaryVariant">@color/color_stats</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+        <!-- 設定 TextInput 的預設樣式為 OutlinedBox -->
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+
+        <!-- 設定 Button 的預設樣式 -->
+        <item name="android:buttonStyle">@style/Widget.MaterialComponents.Button</item>
+    </style>
+
+    <!-- RatingBar 樣式：將星星顏色設置為黃色 (color_calories) -->
+    <style name="RatingBarYellow" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressTint">@color/color_calories</item>
+        <item name="android:colorControlNormal">@color/text_secondary</item>
+    </style>
+</resources>

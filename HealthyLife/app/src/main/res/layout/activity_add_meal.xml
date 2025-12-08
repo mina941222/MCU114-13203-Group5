@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    tools:context=".AddMealActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新增紀錄"
+                android:textColor="@color/color_add_meal"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- 紀錄類型選擇 (飲食 or 飲水) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_record_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="紀錄類型"
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/color_add_meal"
+                app:boxBackgroundColor="@color/white"
+                android:layout_marginBottom="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_record_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/black"
+                    android:background="@color/white"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- 選擇餐別 (只在選擇「飲食」時顯示) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_meal_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/select_meal_type"
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/color_add_meal"
+                app:boxBackgroundColor="@color/white"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_meal_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/black"
+                    android:background="@color/white"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- 飲食紀錄輸入區塊 (只在選擇「飲食」時顯示) -->
+            <LinearLayout
+                android:id="@+id/layout_meal_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- 餐點名稱 (TextInput) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_meal_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="餐點名稱"
+                    app:hintTextColor="@color/black"
+                    app:boxStrokeColor="@color/color_add_meal"
+                    app:boxBackgroundColor="@color/white"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_meal_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:imeOptions="flagNoExtractUi"
+                        android:textColor="@color/black"
+                        android:background="@color/white"
+                        android:padding="16dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 熱量與蛋白質 (兩個 TextInput 並排) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <!-- 熱量 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_calories"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="熱量 (kcal)"
+                        app:hintTextColor="@color/black"
+                        app:boxStrokeColor="@color/color_add_meal"
+                        app:boxBackgroundColor="@color/white"
+                        android:layout_marginEnd="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_calories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:background="@color/white"
+                            android:padding="16dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 蛋白質 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_protein"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="蛋白質 (g)"
+                        app:hintTextColor="@color/black"
+                        app:boxStrokeColor="@color/color_add_meal"
+                        app:boxBackgroundColor="@color/white"
+                        android:layout_marginStart="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_protein"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:background="@color/white"
+                            android:padding="16dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 飲水紀錄輸入區塊 (只在選擇「飲水」時顯示) -->
+            <LinearLayout
+                android:id="@+id/layout_water_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- 飲水量 (TextInput) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_water_amount"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="飲水量 (ml)"
+                    app:hintTextColor="@color/black"
+                    app:boxStrokeColor="@color/color_water"
+                    app:boxBackgroundColor="@color/white"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_water_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:background="@color/white"
+                        android:padding="16dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- 選擇時間 (TimePicker) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="選擇時間"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/btn_select_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="13:59"
+                android:padding="14dp"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- Button: 儲存記錄 -->
+            <Button
+                android:id="@+id/btn_save_meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="儲存記錄"
+                android:backgroundTint="@color/color_add_meal"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Button: 返回首頁 -->
+            <Button
+                android:id="@+id/btn_back_to_dashboard"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="返回首頁"
+                android:textColor="@color/color_add_meal"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

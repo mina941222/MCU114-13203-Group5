@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    tools:context=".FeedbackActivity">
+
+    <!-- 頂部標題與返回按鈕 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@color/card_dark"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- ImageButton: 返回 -->
+        <ImageButton
+            android:id="@+id/btn_back_to_dashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+
+            app:tint="@color/text_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="返回首頁" />
+
+        <TextView
+            android:id="@+id/tv_title_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回饋與設定"
+            android:textColor="@color/color_feedback"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 內容滾動視圖 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/cl_header"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- 0. 通知設定 -->
+            <TextView
+                android:id="@+id/tv_notification_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="通知設定"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/ll_notification_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_background_dark"
+                android:padding="12dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_notification_title">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="每日紀錄提醒 (早上 8 點)"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_daily_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+            </LinearLayout>
+
+
+            <!-- 1. 個人身體數據與目標設定 -->
+            <TextView
+                android:id="@+id/tv_user_info_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="個人身體數據與目標設定"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_notification_switch" />
+
+            <!-- H/W/A 輸入區 (白色輸入框) -->
+            <LinearLayout
+                android:id="@+id/ll_h_w_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_title">
+
+                <!-- TextInput: 身高 (Height) -->
+                <EditText
+                    android:id="@+id/et_height"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="身高 (cm)"
+                    android:inputType="number"
+                    android:textColorHint="@color/text_secondary"
+                    android:textColor="@color/black"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background_white"
+                    android:layout_marginEnd="8dp"/>
+
+                <!-- TextInput: 體重 (Weight) -->
+                <EditText
+                    android:id="@+id/et_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="體重 (kg)"
+                    android:inputType="numberDecimal"
+                    android:textColorHint="@color/text_secondary"
+                    android:textColor="@color/black"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background_white"
+                    android:layout_marginEnd="8dp"/>
+
+                <!-- TextInput: 年齡 (Age) -->
+                <EditText
+                    android:id="@+id/et_age"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="年齡 (歲)"
+                    android:inputType="number"
+                    android:textColorHint="@color/text_secondary"
+                    android:textColor="@color/black"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_background_white"/>
+            </LinearLayout>
+
+            <!-- Button: 計算並儲存目標 (橘色) -->
+            <Button
+                android:id="@+id/btn_calculate_goals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="計算並儲存目標"
+                android:backgroundTint="@color/color_feedback"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="14dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_h_w_a"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- 3. App 滿意度評分 -->
+            <TextView
+                android:id="@+id/tv_rating_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="App 滿意度評分"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@id/btn_calculate_goals" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="@style/RatingBarYellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:numStars="5"
+                android:stepSize="1"
+                app:layout_constraintTop_toBottomOf="@id/tv_rating_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- 4. 您的建議與回饋 -->
+            <TextView
+                android:id="@+id/tv_feedback_content_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="您的建議與回饋"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@id/rating_bar" />
+
+            <!-- TextInput: 回饋內容 (白色輸入框) -->
+            <EditText
+                android:id="@+id/et_feedback_content"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:hint="請輸入您的建議與回饋..."
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/black"
+                android:padding="12dp"
+                android:background="@drawable/rounded_background_white"
+                app:layout_constraintTop_toBottomOf="@id/tv_feedback_content_title" />
+
+            <!-- Button: 提交回饋 -->
+            <Button
+                android:id="@+id/btn_submit_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="提交回饋"
+                android:backgroundTint="@color/color_feedback"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="14dp"
+                app:layout_constraintTop_toBottomOf="@id/et_feedback_content" />
+
+            <!-- Button: 返回首頁 (底部) -->
+            <Button
+                android:id="@+id/btn_back_to_dashboard_bottom"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="返回首頁"
+                android:textColor="@color/color_feedback"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/btn_submit_feedback"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

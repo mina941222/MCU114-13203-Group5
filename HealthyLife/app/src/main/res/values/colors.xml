@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 預設顏色 -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- 專案品牌顏色 (Teal - 來自 AndroidManifest/LoginActivity 的 #00BCD4) -->
+    <color name="color_primary_brand">#00BCD4</color>
+    <color name="color_primary_dark">#00838F</color>
+    <color name="color_accent">#FF9800</color> <!-- 橘色，用於回饋頁 -->
+
+    <!-- 專案介面顏色 (深色主題) -->
+    <color name="background_dark">#212121</color>
+    <color name="card_dark">#323232</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+
+    <!-- 功能顏色 -->
+    <color name="color_calories">#FFC107</color> <!-- 黃色，熱量/進度條 -->
+    <color name="color_water">#03A9F4</color>    <!-- 藍色，飲水/進度條 -->
+    <color name="color_add_meal">#4CAF50</color> <!-- 綠色，新增紀錄 -->
+    <color name="color_stats">#673AB7</color>    <!-- 紫色，統計 -->
+    <color name="color_ai">#9C27B0</color>       <!-- 深紫色，AI 建議 -->
+    <color name="color_feedback">#FF9800</color>  <!-- 橘色，回饋 -->
+
+    <!-- Android 內建顏色參考 (防止紅字) -->
+    <color name="design_default_color_surface">#FFFFFF</color>
+</resources>

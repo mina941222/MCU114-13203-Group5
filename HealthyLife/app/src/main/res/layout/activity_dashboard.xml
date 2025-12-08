@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    tools:context=".DashboardActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp"> <!-- 底部留出空間給導航欄 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 🚨 頂部日期顯示與登出按鈕 (Layout: RelativeLayout) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_date_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/tv_greeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="今日紀錄總覽"
+                        android:textColor="@color/color_primary_brand"
+                        android:textSize="28sp"
+                        android:textStyle="bold"/>
+
+                    <!-- 日期與星期顯示 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="4dp">
+
+                        <!-- 🚨 按鈕: 前一天 -->
+                        <ImageButton
+                            android:id="@+id/btn_previous_day"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@android:color/transparent"
+
+                            app:tint="@color/text_secondary"
+                            android:contentDescription="前一天"/>
+
+                        <TextView
+                            android:id="@+id/tv_date_display"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2025-11-30 (星期日)"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="16sp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"/>
+
+                        <!-- 🚨 按鈕: 後一天 -->
+                        <ImageButton
+                            android:id="@+id/btn_next_day"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@android:color/transparent"
+
+                            app:tint="@color/text_secondary"
+                            android:contentDescription="後一天"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 登出按鈕 (位於右上角) -->
+                <Button
+                    android:id="@+id/btnLogout"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="登出"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:drawableTop="@drawable/ic_logout"
+                    app:tint="@color/text_secondary"/>
+            </RelativeLayout>
+
+            <!-- 🚨 新增：沒有紀錄時的提示文字 -->
+            <TextView
+                android:id="@+id/tv_no_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="今天還沒有紀錄喔！點擊下方『新增紀錄』開始吧！"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:gravity="center"
+                android:background="@drawable/rounded_background_dark"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
+
+            <!-- 熱量目標卡片 (Food/Meal Card) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/card_dark"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- 熱量 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="總熱量"
+                        android:textColor="@color/text_white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="bottom"
+                        android:layout_marginBottom="8dp">
+                        <TextView
+                            android:id="@+id/tv_current_calories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="1200"
+                            android:textColor="@color/color_calories"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/tv_target_calories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="2000 kcal"
+                            android:textColor="@color/text_white"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/tv_remaining_calories"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="剩餘: 800 kcal"
+                            android:gravity="end"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/pb_calories"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:progressTint="@color/color_calories"
+                        android:progressBackgroundTint="@color/text_secondary"
+                        android:layout_marginBottom="16dp"
+                        android:max="100"/>
+
+                    <!-- 蛋白質 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="蛋白質"
+                        android:textColor="@color/text_white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="bottom"
+                        android:layout_marginBottom="8dp">
+                        <TextView
+                            android:id="@+id/tv_current_protein"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="80"
+                            android:textColor="@color/color_add_meal"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/tv_target_protein"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="150 g"
+                            android:textColor="@color/text_white"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/tv_remaining_protein"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="剩餘: 70 g"
+                            android:gravity="end"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/pb_protein"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:progressTint="@color/color_add_meal"
+                        android:progressBackgroundTint="@color/text_secondary"
+                        android:max="100"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 飲水目標卡片 (Water Card) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/card_dark"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="飲水量"
+                        android:textColor="@color/text_white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="bottom"
+                        android:layout_marginBottom="8dp">
+                        <TextView
+                            android:id="@+id/tv_current_water"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="1000"
+                            android:textColor="@color/color_water"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textColor="@color/text_secondary"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/tv_target_water"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="2500 ml"
+                            android:textColor="@color/text_white"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/tv_remaining_water"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="剩餘: 1500 ml"
+                            android:gravity="end"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/pb_water"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:progressTint="@color/color_water"
+                        android:progressBackgroundTint="@color/text_secondary"
+                        android:max="100"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 紀錄列表 (RecyclerView for Meals) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="詳細紀錄 (飲食/飲水)"
+                android:textColor="@color/color_primary_brand"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_meal_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:background="@drawable/rounded_background_dark"
+                android:padding="8dp"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_meal_record"/>
+
+            <!-- 底部導航佔位 -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="80dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 底部導航欄 -->
+    <LinearLayout
+        android:id="@+id/cl_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@color/card_dark"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentBottom="true">
+
+        <!-- 導航按鈕 1: 新增紀錄 -->
+        <LinearLayout
+            android:id="@+id/nav_add_meal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_add_record"
+                app:tint="@color/color_add_meal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新增紀錄"
+                android:textSize="12sp"
+                android:textColor="@color/color_add_meal" />
+        </LinearLayout>
+
+        <!-- 導航按鈕 2: Dashboard - 首頁 -->
+        <LinearLayout
+            android:id="@+id/nav_dashboard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home"
+                app:tint="@color/color_primary_brand" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首頁"
+                android:textSize="12sp"
+                android:textColor="@color/color_primary_brand" />
+        </LinearLayout>
+
+        <!-- 導航按鈕 3: Stats -->
+        <LinearLayout
+            android:id="@+id/nav_stats"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_analytics"
+                app:tint="@color/color_stats" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="統計"
+                android:textSize="12sp"
+                android:textColor="@color/color_stats" />
+        </LinearLayout>
+
+        <!-- 導航按鈕 4: AI Advice -->
+        <LinearLayout
+            android:id="@+id/nav_ai_advice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_ai_advice"
+                app:tint="@color/color_ai" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI建議"
+                android:textSize="12sp"
+                android:textColor="@color/color_ai" />
+        </LinearLayout>
+
+        <!-- 導航按鈕 5: Feedback (回饋與設定) -->
+        <LinearLayout
+            android:id="@+id/nav_feedback"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_feedback"
+                app:tint="@color/color_feedback" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="回饋與設定"
+                android:textSize="12sp"
+                android:textColor="@color/color_feedback" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

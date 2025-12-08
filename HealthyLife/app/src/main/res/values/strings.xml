@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 應用程式名稱 -->
+    <string name="app_name">HealthyLife</string>
+
+    <!-- 登入頁面所需的字串 -->
+    <string name="account_hint">帳號 (Email)</string>
+    <string name="password_hint">密碼</string>
+    <string name="login_action">登入系統</string>
+    <string name="register_action">註冊新帳號</string>
+    <string name="register_switch">還沒有帳號？前往註冊</string>
+    <string name="login_switch">已有帳號？返回登入</string>
+
+    <!-- 新增紀錄頁面 (AddMealActivity) 所需的字串和陣列 -->
+    <string name="select_meal_type">請選擇餐別</string>
+    <string-array name="meal_types">
+        <item>早餐</item>
+        <item>午餐</item>
+        <item>晚餐</item>
+        <item>點心</item>
+    </string-array>
+    <!-- 飲食/飲水 紀錄類型 -->
+    <string-array name="record_types">
+        <item>飲食</item>
+        <item>飲水</item>
+    </string-array>
+
+    <!-- 統計頁面所需字串 -->
+    <string name="stats_back_button">&lt; 返回</string>
+
+</resources>

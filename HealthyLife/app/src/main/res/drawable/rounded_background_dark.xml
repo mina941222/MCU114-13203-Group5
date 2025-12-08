@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/card_dark" /> <!-- 使用 card_dark 顏色 -->
+    <corners android:radius="10dp" /> <!-- 圓角半徑 -->
+</shape>

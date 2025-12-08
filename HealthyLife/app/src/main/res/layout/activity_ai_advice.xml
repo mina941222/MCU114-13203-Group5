@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    tools:context=".AIAdviceActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI 健康建議"
+                android:textColor="@color/color_ai"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- AI 建議區塊 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="12dp"
+                android:layout_marginBottom="32dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AI 根據您的紀錄分析..."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- TextView: AI 建議內容 (核心回饋) -->
+                    <TextView
+                        android:id="@+id/tv_ai_advice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_white"
+                        android:textSize="20sp"
+                        android:textStyle="italic"
+                        android:lineSpacingExtra="4dp"
+                        tools:text="今天的飲食很均衡，繼續保持！" />
+
+                    <TextView
+                        android:id="@+id/tv_data_summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        tools:text="今日熱量：1500 kcal, 蛋白質：60 g" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Button: 重新執行 AI 分析 -->
+            <Button
+                android:id="@+id/btn_run_ai_analysis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="重新分析 (模擬 AI)"
+                android:backgroundTint="@color/color_ai"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Button: 返回首頁 -->
+            <Button
+                android:id="@+id/btn_back_to_dashboard"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="返回首頁"
+                android:textColor="@color/color_ai"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
