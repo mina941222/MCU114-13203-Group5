@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    tools:context=".GoalSetupActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首次登入設定"
+                android:textColor="@color/color_primary_brand"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="請輸入您的身體數據，以計算個人化健康目標。"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- 身高 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身高 (cm)"
+                android:textColor="@color/text_white"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp"/>
+            <EditText
+                android:id="@+id/et_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="請輸入身高"
+                android:inputType="number"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/black"
+                android:padding="12dp"
+                android:background="@drawable/rounded_background_white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- 體重 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="體重 (kg)"
+                android:textColor="@color/text_white"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp"/>
+            <EditText
+                android:id="@+id/et_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="請輸入體重"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/black"
+                android:padding="12dp"
+                android:background="@drawable/rounded_background_white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- 年齡 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年齡 (歲)"
+                android:textColor="@color/text_white"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp"/>
+            <EditText
+                android:id="@+id/et_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="請輸入年齡"
+                android:inputType="number"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/black"
+                android:padding="12dp"
+                android:background="@drawable/rounded_background_white"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- 計算並儲存按鈕 -->
+            <Button
+                android:id="@+id/btn_calculate_and_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="計算並進入首頁"
+                android:backgroundTint="@color/color_primary_brand"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="14dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

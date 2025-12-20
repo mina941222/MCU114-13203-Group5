@@ -1,5 +1,6 @@
 package com.example.healthylife
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
@@ -7,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.healthylife.data.AppDatabase
-// 🚨 修正導入：從獨立檔案導入輔助數據類別 (DatabaseModels.kt)
+// 🚨 修正導入：確保導入輔助數據類別
 import com.example.healthylife.data.WeeklyMacroProgress
 import com.example.healthylife.data.WeeklyWaterIntake
 import com.example.healthylife.databinding.ActivityStatsBinding
@@ -24,6 +25,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
+// 🚨 注意：createLayoutHeightAnimator 在同一個 package (Utils.kt) 中，不需要 import
 
 class StatsActivity : AppCompatActivity() {
 
@@ -33,6 +35,18 @@ class StatsActivity : AppCompatActivity() {
 
     // 星期顯示順序: 星期一(Mon) 到 星期日(Sun)
     private val dayLabels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+
+    // 記錄當前顯示週次的「星期一」日期
+    private var currentWeekStart: Calendar = Calendar.getInstance(Locale.TAIWAN).apply {
+        firstDayOfWeek = Calendar.MONDAY
+        // 調整到本週一
+        set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        // 清除時分秒，避免干擾
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,75 +68,98 @@ class StatsActivity : AppCompatActivity() {
         // 初始化圖表
         setupChart(binding.chartWeeklyCalories, "熱量攝取 (kcal)")
         setupChart(binding.chartWeeklyProtein, "蛋白質攝取 (g)")
-        setupChart(binding.chartWeeklyWater, "飲水總量 (ml)") // 飲水圖表
+        setupChart(binding.chartWeeklyWater, "飲水總量 (ml)")
 
-        // 載入本週資料
+        // 初始載入
         loadWeeklyData()
+        setupListeners()
+    }
 
-        // 返回按鈕
-        binding.btnBackFromStats.setOnClickListener {
-            finish()
+    private fun setupListeners() {
+        binding.btnBackFromStats.setOnClickListener { finish() }
+
+        // 上一週
+        binding.btnPrevWeek.setOnClickListener {
+            currentWeekStart.add(Calendar.DAY_OF_YEAR, -7)
+            loadWeeklyData()
+        }
+
+        // 下一週
+        binding.btnNextWeek.setOnClickListener {
+            currentWeekStart.add(Calendar.DAY_OF_YEAR, 7)
+            loadWeeklyData()
+        }
+
+        // 日曆選擇
+        binding.btnCalendarSelect.setOnClickListener {
+            showDatePicker()
         }
     }
 
-    // --- 輔助函式: 獲取日期範圍 ---
+    private fun showDatePicker() {
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                // 使用者選擇日期後，計算該日期所在的星期一
+                val selectedDate = Calendar.getInstance(Locale.TAIWAN).apply {
+                    set(year, month, dayOfMonth)
+                    firstDayOfWeek = Calendar.MONDAY
+                    set(Calendar.DAY_OF_WEEK, Calendar.MONDAY) // 自動跳到該週的週一
 
-    /**
-     * 計算本週的起始日和結束日 (從星期一到星期日)
-     * @return Pair<String, String> (startDate, endDate)
-     */
-    private fun getWeekRange(): Pair<String, String> {
-        val calendar = Calendar.getInstance(Locale.TAIWAN)
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        // 設定每週的第一天為星期一，並調整到本週的星期一
-        calendar.firstDayOfWeek = Calendar.MONDAY
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
-        val startDate = dateFormat.format(calendar.time)
-
-        // 取得本週的星期日
-        calendar.add(Calendar.DATE, 6)
-        val endDate = dateFormat.format(calendar.time)
-
-        // 顯示日期範圍在 UI 上
-        binding.tvDateRange.text = "本週統計: $startDate ~ $endDate"
-
-        return Pair(startDate, endDate)
+                    set(Calendar.HOUR_OF_DAY, 0)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }
+                currentWeekStart = selectedDate
+                loadWeeklyData()
+            },
+            currentWeekStart.get(Calendar.YEAR),
+            currentWeekStart.get(Calendar.MONTH),
+            currentWeekStart.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 
-    // --- 輔助函式: 資料載入與處理 ---
-
     private fun loadWeeklyData() {
-        val (startDate, endDate) = getWeekRange()
+        // 計算這一週的結束日 (週一 + 6天 = 週日)
+        val endOfWeek = (currentWeekStart.clone() as Calendar).apply {
+            add(Calendar.DAY_OF_YEAR, 6)
+        }
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val displayFormat = SimpleDateFormat("MM/dd", Locale.getDefault())
+
+        val startDateStr = dateFormat.format(currentWeekStart.time)
+        val endDateStr = dateFormat.format(endOfWeek.time)
+
+        // 更新 UI 顯示日期範圍
+        binding.tvDateRange.text = "${displayFormat.format(currentWeekStart.time)} - ${displayFormat.format(endOfWeek.time)}"
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // 1. 取得熱量和蛋白質資料
-                val macroData = db.mealDao().getWeeklyMacroProgress(userId, startDate, endDate)
-                val (calorieEntries, proteinEntries) = processMacroData(macroData, startDate)
+                // 資料庫查詢
+                val macroData = db.mealDao().getWeeklyMacroProgress(userId, startDateStr, endDateStr)
+                val (calorieEntries, proteinEntries) = processMacroData(macroData, startDateStr)
 
-                // 2. 取得飲水資料
-                val waterData = db.mealDao().getWeeklyWaterIntake(userId, startDate, endDate)
-                val waterEntries = processWaterData(waterData, startDate)
+                val waterData = db.mealDao().getWeeklyWaterIntake(userId, startDateStr, endDateStr)
+                val waterEntries = processWaterData(waterData, startDateStr)
 
                 withContext(Dispatchers.Main) {
-                    // 繪製圖表
+                    // 更新圖表
                     updateChart(binding.chartWeeklyCalories, calorieEntries, ContextCompat.getColor(this@StatsActivity, R.color.color_calories), "熱量")
                     updateChart(binding.chartWeeklyProtein, proteinEntries, ContextCompat.getColor(this@StatsActivity, R.color.color_add_meal), "蛋白質")
                     updateChart(binding.chartWeeklyWater, waterEntries, ContextCompat.getColor(this@StatsActivity, R.color.color_water), "飲水量")
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    // 為了除錯，顯示錯誤訊息
                     Toast.makeText(this@StatsActivity, "載入數據失敗: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
-    /**
-     * 處理營養數據，並根據星期一到星期日的順序填入 BarEntry 列表
-     */
+    // 處理營養數據
     private fun processMacroData(
         data: List<WeeklyMacroProgress>,
         startDateStr: String
@@ -135,30 +172,21 @@ class StatsActivity : AppCompatActivity() {
 
         val calendar = Calendar.getInstance(Locale.TAIWAN)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        // 將日曆設定為本週的星期一
         calendar.time = dateFormat.parse(startDateStr) ?: Date()
 
         for (i in dayLabels.indices) {
             val dateStr = dateFormat.format(calendar.time)
-
-            // 根據順序 (0=Mon, 6=Sun) 填入資料
             val calories = calorieMap[dateStr] ?: 0f
             val protein = proteinMap[dateStr] ?: 0f
 
             calorieEntries.add(BarEntry(i.toFloat(), calories))
             proteinEntries.add(BarEntry(i.toFloat(), protein))
-
-            // 移到下一天
             calendar.add(Calendar.DATE, 1)
         }
-
         return Pair(calorieEntries, proteinEntries)
     }
 
-    /**
-     * 處理飲水數據，並根據星期一到星期日的順序填入 BarEntry 列表
-     */
+    // 處理飲水數據
     private fun processWaterData(
         data: List<WeeklyWaterIntake>,
         startDateStr: String
@@ -168,54 +196,40 @@ class StatsActivity : AppCompatActivity() {
 
         val calendar = Calendar.getInstance(Locale.TAIWAN)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        // 將日曆設定為本週的星期一
         calendar.time = dateFormat.parse(startDateStr) ?: Date()
 
         for (i in dayLabels.indices) {
             val dateStr = dateFormat.format(calendar.time)
-
-            // 根據順序 (0=Mon, 6=Sun) 填入資料
             val water = waterMap[dateStr] ?: 0f
             waterEntries.add(BarEntry(i.toFloat(), water))
-
-            // 移到下一天
             calendar.add(Calendar.DATE, 1)
         }
-
         return waterEntries
     }
 
-    // --- 輔助函式: 圖表設定與更新 (使用 MPAndroidChart) ---
-
     private fun setupChart(chart: BarChart, description: String) {
-        chart.description.isEnabled = false // 關閉描述
-        chart.setMaxVisibleValueCount(7) // 最多顯示7個數據點
+        chart.description.isEnabled = false
+        chart.setMaxVisibleValueCount(7)
         chart.setPinchZoom(false)
         chart.setDrawGridBackground(false)
         chart.setExtraOffsets(5f, 10f, 5f, 10f)
 
-        // X 軸設定
         val xAxis = chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.granularity = 1f
         xAxis.textColor = Color.WHITE
-        // 使用 Mon, Tue, ..., Sun 順序
         xAxis.valueFormatter = IndexAxisValueFormatter(dayLabels)
-        xAxis.axisMinimum = -0.5f // 讓圖表從第一個標籤開始
+        xAxis.axisMinimum = -0.5f
         xAxis.labelCount = dayLabels.size
 
-        // 左 Y 軸設定
         val leftAxis = chart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.textColor = Color.WHITE
-        leftAxis.axisMinimum = 0f // Y 軸從 0 開始
+        leftAxis.axisMinimum = 0f
 
-        // 右 Y 軸設定
         chart.axisRight.isEnabled = false
 
-        // 圖例設定
         val legend = chart.legend
         legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -223,9 +237,9 @@ class StatsActivity : AppCompatActivity() {
         legend.setDrawInside(false)
         legend.textColor = Color.WHITE
 
-        chart.setNoDataText("無本週資料可供顯示")
+        chart.setNoDataText("此週無資料")
         chart.setNoDataTextColor(Color.GRAY)
-        chart.invalidate() // 刷新圖表
+        chart.invalidate()
     }
 
     private fun updateChart(chart: BarChart, entries: List<BarEntry>, color: Int, label: String) {
@@ -241,10 +255,10 @@ class StatsActivity : AppCompatActivity() {
         dataSet.valueTextSize = 10f
 
         val barData = BarData(dataSet)
-        barData.barWidth = 0.5f // 柱狀圖寬度
+        barData.barWidth = 0.5f
 
         chart.data = barData
         chart.invalidate()
-        chart.animateY(1000) // 加入動畫
+        chart.animateY(800)
     }
 }

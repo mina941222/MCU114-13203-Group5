@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".GoalSetupActivity" />
         <!-- 頁面 2: 今日紀錄頁 (DashboardActivity) - 首頁 -->
         <activity android:name=".DashboardActivity" />
 

@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.6"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <!-- TextInput: 登入帳號 - 使用 FilledBox 樣式和白色背景 -->
+    <!-- TextInput: 登入帳號 - 使用您原本要求的 FilledBox 樣式和白色背景 -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -51,7 +51,7 @@
             android:focusableInTouchMode="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- TextInput: 密碼 - 使用 FilledBox 樣式和白色背景 -->
+    <!-- TextInput: 密碼 - 使用您原本要求的 FilledBox 樣式和白色背景 -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"

@@ -18,81 +18,149 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <Button
-                android:id="@+id/btn_back_from_stats"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
+            <!-- 頂部導航 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/stats_back_button"
-                android:textColor="@color/text_white"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/btn_back_from_stats"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/stats_back_button"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="統計與分析"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_stats"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <!-- 🚨 新增：日期控制列 (使用 Button 替換 ImageView) -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="統計與分析"
-                android:textColor="@color/color_stats"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/rounded_background_dark"
+                android:padding="8dp"
+                android:layout_marginBottom="24dp">
 
-            <TextView
-                android:id="@+id/tv_date_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp"
-                android:layout_marginBottom="24dp"
-                tools:text="本週統計: 2025-11-24 ~ 2025-11-30"/>
+                <!-- 上一週按鈕 (使用 Unicode 箭頭) -->
+                <Button
+                    android:id="@+id/btn_prev_week"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="◀"
+                    android:textColor="@color/color_stats"
+                    android:textSize="20sp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:contentDescription="上一週"/>
 
-            <!-- 1. 熱量圖表 (BarChart) -->
+                <!-- 日期範圍顯示 -->
+                <TextView
+                    android:id="@+id/tv_date_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp"
+                    tools:text="11/24 - 11/30"/>
+
+                <!-- 下一週按鈕 (使用 Unicode 箭頭) -->
+                <Button
+                    android:id="@+id/btn_next_week"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="▶"
+                    android:textColor="@color/color_stats"
+                    android:textSize="20sp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:contentDescription="下一週"/>
+
+                <!-- 分隔線 -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="24dp"
+                    android:background="@color/text_secondary"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"/>
+
+                <!-- 日曆按鈕 (使用 Unicode 日曆符號) -->
+                <Button
+                    android:id="@+id/btn_calendar_select"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="📅"
+                    android:textColor="@color/text_white"
+                    android:textSize="20sp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:contentDescription="選擇日期"/>
+
+            </LinearLayout>
+
+            <!-- 1. 熱量圖表 -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="每週熱量攝取 (kcal)"
                 android:textColor="@color/text_white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart_weekly_calories"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/rounded_background_dark"/>
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/rounded_background_dark"/>
 
-            <!-- 2. 蛋白質圖表 (BarChart) -->
+            <!-- 2. 蛋白質圖表 -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="每週蛋白質攝取 (g)"
                 android:textColor="@color/text_white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart_weekly_protein"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/rounded_background_dark"/>
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/rounded_background_dark"/>
 
-            <!-- 3. 飲水圖表 (BarChart) -->
+            <!-- 3. 飲水圖表 -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="每週飲水總量 (ml)"
                 android:textColor="@color/text_white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart_weekly_water"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/rounded_background_dark"/>
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/rounded_background_dark"/>
 
         </LinearLayout>
     </ScrollView>
