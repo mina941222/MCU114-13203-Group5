@@ -49,16 +49,6 @@
                         android:gravity="center_vertical"
                         android:layout_marginTop="4dp">
 
-                        <!-- 🚨 按鈕: 前一天 -->
-                        <ImageButton
-                            android:id="@+id/btn_previous_day"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@android:color/transparent"
-
-                            app:tint="@color/text_secondary"
-                            android:contentDescription="前一天"/>
-
                         <TextView
                             android:id="@+id/tv_date_display"
                             android:layout_width="wrap_content"
@@ -68,16 +58,6 @@
                             android:textSize="16sp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"/>
-
-                        <!-- 🚨 按鈕: 後一天 -->
-                        <ImageButton
-                            android:id="@+id/btn_next_day"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@android:color/transparent"
-
-                            app:tint="@color/text_secondary"
-                            android:contentDescription="後一天"/>
 
                     </LinearLayout>
                 </LinearLayout>
